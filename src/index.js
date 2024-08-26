@@ -66,8 +66,8 @@ function setDelay(difficulty) {
  * const holes = document.querySelectorAll('.hole');
  * chooseHole(holes) //> returns one of the 9 holes that you defined
  */
-  
-let lastHole; 
+   
+
 
 function chooseHole(holes) {
   const index = randomInteger(0, 8); 
@@ -102,10 +102,16 @@ function chooseHole(holes) {
 *  //   return gameStopped
 *
 */
+// the gameOver function that will determine if game should stop or end
 function gameOver() {
-  // TODO: Write your code here
-  
-}
+    if(time > 0){
+      let timeoutId = showUp();
+      return timeoutId;
+    } else {
+      let gameStopped = stopGame();
+      return gameStopped;
+    }
+  }
 
 /**
 *
@@ -118,7 +124,7 @@ function gameOver() {
 */
 function showUp() {
   let delay = setDelay("hard"); // Updated so that it uses setDelay()
-  const hole = chooseHole(holes);  // Updated so that it uses chooseHole()
+  const hole = chooseHole(holes);  // Updated so that it use chooseHole()
   return showAndHide(hole, delay);
 }
 
@@ -263,8 +269,8 @@ function stopGame(){
 *
 */
 function startGame(){
-  //setDuration(10);
-  //showUp();
+  setDuration(10);
+  showUp();
   return "game started";
 }
 
