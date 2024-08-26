@@ -1,9 +1,9 @@
 const holes = document.querySelectorAll('.hole');
 const moles = document.querySelectorAll('.mole');
 const startButton = document.querySelector('#start');
-// TODO: Add the missing query selectors:
-const score = document.querySelector('#score'); // Use querySelector() to get the score element
-const timerDisplay = document.querySelector('#timer'); // use querySelector() to get the timer element.
+// Added the missing query selectors:
+const score = document.querySelector('#score'); // for the score element
+const timerDisplay = document.querySelector('#timer'); // for the timer element.
 
 let time = 0;
 let timer;
@@ -171,8 +171,8 @@ function toggleVisibility(hole){
 *
 */
 function updateScore() {
-  // TODO: Write your code here
-
+  points += 1;
+  score.textContent = points;
   return points;
 }
 
@@ -184,9 +184,8 @@ function updateScore() {
 *
 */
 function clearScore() {
-  // TODO: Write your code here
-  // points = 0;
-  // score.textContent = points;
+  points = 0;
+  score.textContent = points;
   return points;
 }
 
@@ -223,8 +222,7 @@ function startTimer() {
 *
 */
 function whack(event) {
-  // TODO: Write your code here.
-  // call updateScore()
+  updateScore()
   return points;
 }
 
@@ -234,10 +232,13 @@ function whack(event) {
 * for an example on how to set event listeners using a for loop.
 */
 function setEventListeners(){
-  // TODO: Write your code here
-
+  moles.forEach(
+    mole => mole.addEventListener('click', whack)
+  );
   return moles;
 }
+
+setEventListeners(moles);
 
 /**
 *
