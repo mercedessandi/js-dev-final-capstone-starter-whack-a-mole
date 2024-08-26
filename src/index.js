@@ -39,17 +39,14 @@ function randomInteger(min, max) {
  * setDelay("hard") //> returns 856 (returns a random number between 600 and 1200).
  *
  */
-function setDelay(difficulty) {
   function setDelay(difficulty) {
     if (difficulty === "easy") {
         return 1500; 
     } else if (difficulty === "normal") {
         return 1000;
     } else if (difficulty === "hard") {
-        return Math.floor(Math.random() * (1200 - 600 + 1)) + 600; 
+        return randomInteger(600, 1200); 
     } 
-}
-  
 }
 
 /**
@@ -70,7 +67,7 @@ function setDelay(difficulty) {
 
 
 function chooseHole(holes) {
-  const index = randomInteger(0, 8); 
+  const index = randomInteger(0, holes.length -1); 
     const hole = holes[index]; 
 
     if (hole === lastHole) {
@@ -123,7 +120,7 @@ function gameOver() {
 *
 */
 function showUp() {
-  let delay = setDelay("hard"); // Updated so that it uses setDelay()
+  let delay = setDelay(difficulty); // Updated so that it uses setDelay()
   const hole = chooseHole(holes);  // Updated so that it use chooseHole()
   return showAndHide(hole, delay);
 }
@@ -195,9 +192,10 @@ function clearScore() {
 *
 */
 function updateTimer() {
-  // TODO: Write your code here.
-  // hint: this code is provided to you in the instructions.
-  
+  if (time > 0){
+    time -= 1;
+    timerDisplay.textContent = time;
+  }
   return time;
 }
 
@@ -208,8 +206,7 @@ function updateTimer() {
 *
 */
 function startTimer() {
-  // TODO: Write your code here
-  // timer = setInterval(updateTimer, 1000);
+  timer = setInterval(updateTimer, 1000);
   return timer;
 }
 
@@ -231,14 +228,29 @@ function whack(event) {
 * Adds the 'click' event listeners to the moles. See the instructions
 * for an example on how to set event listeners using a for loop.
 */
-function setEventListeners(){
+function setEventListeners(moles){
   moles.forEach(
     mole => mole.addEventListener('click', whack)
   );
   return moles;
 }
 
-setEventListeners(moles);
+/**
+*
+* This is the function that starts the game when the `startButton`
+* is clicked.
+*
+*/
+function startGame(){
+  clearScore();
+  setDuration(10);
+  startTimer();
+  setEventListeners(moles);
+  showUp();
+  return "game started";
+}
+
+startButton.addEventListener("click", startGame);
 
 /**
 *
@@ -263,19 +275,6 @@ function stopGame(){
   return "game stopped";
 }
 
-/**
-*
-* This is the function that starts the game when the `startButton`
-* is clicked.
-*
-*/
-function startGame(){
-  setDuration(10);
-  showUp();
-  return "game started";
-}
-
-startButton.addEventListener("click", startGame);
 
 
 // Please do not modify the code below.
